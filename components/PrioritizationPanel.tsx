@@ -11,15 +11,17 @@ const presetProfiles = {
   'Minimize Workload': { PriorityLevel: 1, RequestedTaskIDs: 2, Fairness: 3, Cost: 5 },
 }
 
+type PresetProfileKey = keyof typeof presetProfiles
+
 const PrioritizationPanel: React.FC<PrioritizationPanelProps> = ({ weights, onWeightsChange }) => {
-  const [selectedProfile, setSelectedProfile] = useState<string>('')
+  const [selectedProfile, setSelectedProfile] = useState<PresetProfileKey | ''>('')
 
   const handleSliderChange = (key: string, value: number) => {
     onWeightsChange({ ...weights, [key]: value })
     setSelectedProfile('')
   }
 
-  const applyPreset = (profile: string) => {
+  const applyPreset = (profile: PresetProfileKey) => {
     const preset = presetProfiles[profile]
     if (preset) {
       onWeightsChange(preset)
@@ -35,7 +37,7 @@ const PrioritizationPanel: React.FC<PrioritizationPanelProps> = ({ weights, onWe
           Preset Profiles:
           <select
             value={selectedProfile}
-            onChange={(e) => applyPreset(e.target.value)}
+            onChange={(e) => applyPreset(e.target.value as PresetProfileKey)}
             style={{ marginLeft: '0.5rem' }}
           >
             <option value="">Select a profile</option>
