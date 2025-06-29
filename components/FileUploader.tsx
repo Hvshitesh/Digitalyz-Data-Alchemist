@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Papa from 'papaparse'
+import * as Papa from 'papaparse'
 import * as XLSX from 'xlsx'
 
 type DataRow = { [key: string]: any }
@@ -30,7 +30,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({ entity, onDataLoaded }) => 
 
       if (fileName.endsWith('.csv')) {
         const text = data as string
-        Papa.parse(text, {
+        (Papa as any).parse(text, {
           header: true,
           skipEmptyLines: true,
           complete: (results: Papa.ParseResult<DataRow>) => {
