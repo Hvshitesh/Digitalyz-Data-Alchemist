@@ -75,7 +75,7 @@ export function validateWorkers(workers: DataRow[], tasks: DataRow[]): Validatio
 
     // AvailableSlots must be numeric list separated by | or comma
     if (worker.AvailableSlots) {
-      const slots = worker.AvailableSlots.toString().split(/[\|,]/).map((s) => s.trim())
+      const slots = worker.AvailableSlots.toString().split(/[\|,]/).map((s: string) => s.trim())
       for (const slot of slots) {
         if (!/^\d+$/.test(slot)) {
           errors.push({ rowIndex: i, column: 'AvailableSlots', message: `Malformed slot: ${slot}` })
